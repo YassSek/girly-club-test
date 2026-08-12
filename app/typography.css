@@ -1,0 +1,32 @@
+/* -----------------------------------------------------------------------
+   Typographie du site — un seul endroit pour décider quelle police va où,
+   pour ne plus avoir à ajouter "font-playfair" / "font-raleway" à la main
+   sur chaque élément.
+
+   Par défaut : tout le texte est en Raleway (police de lecture, définie
+   sur <body> via la classe "font-raleway" dans app/layout.tsx — elle
+   s'applique à tout par héritage CSS).
+
+   Playfair Display est réservé automatiquement à :
+   - tous les titres (h1 à h6)
+   - tous les boutons
+   - tout élément qui porte déjà la classe "tracking-widest2" (nos petits
+     labels en majuscules espacées : kickers, boutons-liens, labels de
+     formulaire — ils utilisent tous cette classe pour l'espacement des
+     lettres, donc pas besoin d'une classe en plus pour la police).
+
+   Cas particuliers (texte qui doit rester en Playfair Display sans être
+   un titre/bouton/label) : ajoute la classe "font-playfair" directement
+   sur l'élément, comme pour le slogan du header.
+   ----------------------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button,
+.tracking-widest2 {
+  font-family: var(--font-playfair), serif;
+}
