@@ -42,7 +42,7 @@ export default function EventsGrid({
             Le padding gauche est plus généreux pour que la première carte
             paraisse centrée plutôt que collée au bord. */}
         <div className="relative">
-          <div className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-8 pb-4 sm:px-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <div className="flex snap-x snap-mandatory scroll-px-8 gap-6 overflow-x-auto px-8 pb-4 sm:scroll-px-16 sm:px-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {events.map((event, i) => (
               <div
                 key={event.id}
