@@ -88,7 +88,7 @@ const dictionary: Record<Locale, Dictionary> = {
       about: "À propos",
     },
     header: {
-      cities: "Paris · Côte d'Azur · Belgique · Monaco & Genève",
+      cities: "France · Belgique · Monaco & Suisse",
       tagline:
         "Vous ne réservez pas simplement une séance.\nVous vivez une expérience.",
       cta: "Découvrez nos expériences",
@@ -133,7 +133,7 @@ const dictionary: Record<Locale, Dictionary> = {
       errorNetwork: "Impossible de contacter le serveur. Vérifie ta connexion.",
     },
     footer: {
-      cities: "Paris · Côte d'Azur · Belgique · Monaco & Genève",
+      cities: "France · Belgique · Monaco & Suisse",
       followUs: "Suivez-nous",
     },
     about: {
@@ -163,7 +163,7 @@ const dictionary: Record<Locale, Dictionary> = {
       about: "About us",
     },
     header: {
-      cities: "Paris · French Riviera · Belgium · Monaco & Geneva",
+      cities: "France · Belgium · Monaco & Switzerland",
       tagline:
         "You're not just booking a class.\nYou're living an experience.",
       cta: "Discover our experiences",
@@ -208,7 +208,7 @@ const dictionary: Record<Locale, Dictionary> = {
       errorNetwork: "Couldn't reach the server. Check your connection.",
     },
     footer: {
-      cities: "Paris · French Riviera · Belgium · Monaco & Geneva",
+      cities: "France · Belgium · Monaco & Switzerland",
       followUs: "Follow us",
     },
     about: {

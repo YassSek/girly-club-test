@@ -25,7 +25,7 @@ export default function EventCard({ event, spotsLeft, onSelect }: Props) {
         onClick={onSelect}
         disabled={isFull}
         aria-label={isFull ? t.eventCard.fullAria(L.title) : t.eventCard.bookAria(L.title)}
-        className="relative block aspect-[4/5] w-full appearance-none overflow-hidden border-0 bg-ink p-0 disabled:cursor-not-allowed"
+        className="relative block aspect-[900/1272] w-full appearance-none overflow-hidden border-0 bg-ink p-0 disabled:cursor-not-allowed"
       >
         {event.image ? (
           <Image
@@ -33,7 +33,8 @@ export default function EventCard({ event, spotsLeft, onSelect }: Props) {
             alt={L.title}
             fill
             sizes="(max-width: 640px) 300px, 340px"
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            quality={90}
+            className="object-contain transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-end bg-gradient-to-br from-ink via-bordeaux to-ink p-6">
