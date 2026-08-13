@@ -57,3 +57,18 @@ body {
 .animate-modal-in {
   animation: modalIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+/* Petit va-et-vient pour suggérer qu'on peut glisser horizontalement */
+@keyframes swipeHint {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(6px);
+  }
+}
+
+.animate-swipe-hint {
+  animation: swipeHint 1.4s ease-in-out infinite;
+}

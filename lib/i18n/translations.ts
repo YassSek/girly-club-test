@@ -22,6 +22,7 @@ export type Dictionary = {
   eventsGrid: {
     kicker: string;
     title: string;
+    swipeHint: string;
   };
   eventCard: {
     seeDetails: string;
@@ -87,14 +88,15 @@ const dictionary: Record<Locale, Dictionary> = {
       about: "À propos",
     },
     header: {
-      cities: "Paris · Cannes · Bruxelles",
+      cities: "Paris · Côte d'Azur · Belgique · Monaco & Genève",
       tagline:
-        "Tu ne réserves pas simplement une séance. Tu rejoins une expérience.",
-      cta: "Découvrir nos expériences",
+        "Vous ne réservez pas simplement une séance.\nVous vivez une expérience.",
+      cta: "Découvrez nos expériences",
     },
     eventsGrid: {
       kicker: "Agenda",
-      title: "Les prochaines expériences",
+      title: "Nos prochaines expériences",
+      swipeHint: "Faites glisser pour découvrir →",
     },
     eventCard: {
       seeDetails: "Voir les détails",
@@ -131,8 +133,8 @@ const dictionary: Record<Locale, Dictionary> = {
       errorNetwork: "Impossible de contacter le serveur. Vérifie ta connexion.",
     },
     footer: {
-      cities: "Paris · Cannes · Bruxelles",
-      followUs: "Suis-nous",
+      cities: "Paris · Côte d'Azur · Belgique · Monaco & Genève",
+      followUs: "Suivez-nous",
     },
     about: {
       kicker: "À propos",
@@ -161,14 +163,15 @@ const dictionary: Record<Locale, Dictionary> = {
       about: "About us",
     },
     header: {
-      cities: "Paris · Cannes · Brussels",
+      cities: "Paris · French Riviera · Belgium · Monaco & Geneva",
       tagline:
-        "You're not just booking a class. You're joining an experience.",
+        "You're not just booking a class.\nYou're living an experience.",
       cta: "Discover our experiences",
     },
     eventsGrid: {
       kicker: "Schedule",
-      title: "Upcoming experiences",
+      title: "Our upcoming experiences",
+      swipeHint: "Swipe to explore →",
     },
     eventCard: {
       seeDetails: "See details",
@@ -205,7 +208,7 @@ const dictionary: Record<Locale, Dictionary> = {
       errorNetwork: "Couldn't reach the server. Check your connection.",
     },
     footer: {
-      cities: "Paris · Cannes · Brussels",
+      cities: "Paris · French Riviera · Belgium · Monaco & Geneva",
       followUs: "Follow us",
     },
     about: {

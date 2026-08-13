@@ -51,7 +51,7 @@ export default function Footer() {
     <footer className="bg-ink py-12 text-center text-paper/60">
       {/* Réseaux sociaux — liens à renseigner plus tard (href="#" pour l'instant) */}
       <div className="mx-auto flex max-w-xs flex-col items-center gap-4">
-        <p className="text-xs uppercase tracking-widest2 text-paper/50">
+        <p className="text-xs uppercase tracking-widest2 text-paper">
           {t.footer.followUs}
         </p>
         <div className="flex items-center gap-4">
@@ -77,7 +77,7 @@ export default function Footer() {
             className="object-contain"
           />
         </div>
-        <p className="mt-3 text-xs uppercase tracking-widest2">
+        <p className="mt-3 text-xs uppercase tracking-widest2 text-paper">
           {t.footer.cities}
         </p>
       </div>

@@ -7,6 +7,10 @@
 // vraies photos, ou mets une URL (ex: depuis Supabase Storage) une fois
 // prêtes.
 //
+// `description` : utilise "\n" pour aller à la ligne et "• " en début de
+// ligne pour une liste à puces — les deux s'affichent correctement sur la
+// carte (dépliée via "Voir les détails").
+//
 // `en` : traduction anglaise optionnelle, pour la version EN du site
 // (bouton FR/EN dans la navbar). Si tu ne remplis pas `en` pour un nouvel
 // événement, le site affichera simplement le texte français par défaut
@@ -41,42 +45,42 @@ export type GirlyEvent = {
 export const events: GirlyEvent[] = [
   {
     id: "pilates-bateau-cannes",
-    title: "Pilates sur Bateau",
+    title: "Pilates on a Boat",
     city: "Cannes",
-    venue: "À bord d'un bateau d'exception",
+    venue: "Port de Cannes",
     date: "25 août 2026",
-    time: "à confirmer",
-    pricePerPerson: 65,
+    time: "10h-14h ou 14h30-18h",
+    pricePerPerson: 125,
     maxParticipants: 16,
     maxPerBooking: 4,
     description:
-      "Une séance de Pilates au soleil, à bord d'un bateau d'exception. Le temps d'un moment entre girls.",
+      "Une journée en mer au départ de Cannes, entre Pilates, brunch, baignade et moments entre girls — deux sessions au choix (10h-14h ou 14h30-18h). Une expérience pensée pour profiter de la French Riviera, prendre soin de soi et rencontrer la communauté The Girly Club.\n\nVotre ticket comprend :\n• Séance de Pilates sur le bateau\n• Matériel de Pilates fourni\n• Navigation au départ de Cannes\n• Brunch & boissons\n• Baignade & temps libre à bord\n• Goodie bag The Girly Club\n\nEt parce que la journée ne s'arrête pas au retour au port… votre ticket inclut dès 20h une entrée au The Bloom, sur la Croisette, pour prolonger l'expérience The Girly Club dans un espace entièrement privatisé pour nos participantes. 🍒",
     image: "/images/events/pilates-bateau-cannes.jpg",
     en: {
       title: "Pilates on a Boat",
-      venue: "Aboard an exceptional boat",
+      venue: "Cannes Harbour",
       description:
-        "A sun-soaked Pilates session aboard an exceptional boat. A moment to share between girls.",
+        "A day at sea from Cannes — Pilates, brunch, swimming and quality time between girls, with two sessions to choose from (10am-2pm or 2:30pm-6pm). An experience designed to enjoy the French Riviera, take care of yourself and meet the Girly Club community.\n\nYour ticket includes:\n• Pilates session on the boat\n• Pilates equipment provided\n• Departure from Cannes\n• Brunch & drinks\n• Swimming & free time on board\n• The Girly Club goodie bag\n\nAnd because the day doesn't stop once you're back at the harbour… your ticket includes entry to The Bloom on La Croisette from 8pm, to keep the Girly Club experience going in a space fully privatised for our guests. 🍒",
     },
   },
   {
     id: "pilates-piscine-cannes",
-    title: "Pilates à la Piscine",
+    title: "Pilates Pool Day",
     city: "Cannes",
-    venue: "Au bord d'une magnifique piscine",
+    venue: "Villa privée avec piscine — à 20 min de Cannes",
     date: "26 août 2026",
-    time: "à confirmer",
-    pricePerPerson: 55,
+    time: "10h30-14h30",
+    pricePerPerson: 75,
     maxParticipants: 20,
     maxPerBooking: 4,
     description:
-      "Une séance de Pilates au soleil, au bord d'une magnifique piscine à Cannes. Un moment privilégié entre girls.",
+      "Une parenthèse bien-être dans une villa privée avec piscine, à seulement 20 minutes de Cannes.\n\nVotre ticket comprend :\n• 1h de Pilates avec une coach privée\n• Matériel de Pilates fourni\n• Accès à la villa et à la piscine privatisée\n• Brunch & boissons\n• Baignade & moment de détente au bord de la piscine\n• Goodie bag The Girly Club\n• Un moment privilégié pour rencontrer et profiter avec la communauté The Girly Club\n\nAprès le Pilates et le brunch, place au pool time : baignade, soleil, musique et détente entre filles dans une villa entièrement privatisée pour l'occasion. 🍒",
     image: "/images/events/pilates-piscine-cannes.jpg",
     en: {
-      title: "Poolside Pilates",
-      venue: "By a stunning swimming pool",
+      title: "Pilates Pool Day",
+      venue: "Private villa with pool — 20 min from Cannes",
       description:
-        "A sun-soaked Pilates session by a stunning pool in Cannes. A special moment to share between girls.",
+        "A wellness break in a private villa with a pool, just 20 minutes from Cannes.\n\nYour ticket includes:\n• 1h Pilates class with a private coach\n• Pilates equipment provided\n• Access to the villa and the private pool\n• Brunch & drinks\n• Swimming & relaxation by the pool\n• The Girly Club goodie bag\n• A special moment to meet and enjoy the Girly Club community\n\nAfter Pilates and brunch, it's pool time: swimming, sun, music and relaxation between girls in a villa fully privatised for the occasion. 🍒",
     },
   },
   {

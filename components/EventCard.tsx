@@ -69,7 +69,7 @@ export default function EventCard({ event, spotsLeft, onSelect }: Props) {
           {L.venue}
         </p>
         <p
-          className={`text-sm leading-relaxed text-ink/80 ${
+          className={`whitespace-pre-line text-sm leading-relaxed text-ink/80 ${
             expanded ? "" : "line-clamp-2"
           }`}
         >

@@ -30,3 +30,11 @@ button,
 .tracking-widest2 {
   font-family: var(--font-playfair), serif;
 }
+
+/* Exception : un élément qui porte "tracking-widest2" (donc Playfair par
+   la règle ci-dessus) mais qui doit malgré tout rester en Raleway — ajoute
+   les deux classes ensemble ("tracking-widest2 font-raleway"). Les deux
+   classes combinées l'emportent sur la règle générale ci-dessus. */
+.tracking-widest2.font-raleway {
+  font-family: var(--font-raleway), sans-serif;
+}
