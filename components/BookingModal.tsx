@@ -244,7 +244,7 @@ export default function BookingModal({ event, spotsLeft, onClose }: Props) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full border border-bordeaux bg-bordeaux py-3.5 text-sm font-bold uppercase tracking-widest2 text-paper transition-colors duration-300 hover:bg-paper hover:text-bordeaux disabled:opacity-50"
+            className="btn-bordeaux w-full py-3.5 text-sm font-bold uppercase tracking-widest2"
           >
             {loading ? t.bookingModal.submitLoading : t.bookingModal.submit(totalPrice)}
           </button>

@@ -103,7 +103,7 @@ export default function EventCard({ event, spotsLeft, onSelect }: Props) {
           type="button"
           onClick={onSelect}
           disabled={isFull}
-          className="mt-2 block w-full border border-bordeaux bg-bordeaux px-5 py-2 text-center text-xs font-bold uppercase tracking-widest2 text-paper transition-colors duration-300 hover:bg-paper hover:text-bordeaux disabled:cursor-not-allowed disabled:opacity-50"
+          className="btn-bordeaux mt-2 block w-full px-5 py-2 text-center text-xs font-bold uppercase tracking-widest2"
         >
           {isFull ? t.eventCard.full : t.eventCard.book}
         </button>

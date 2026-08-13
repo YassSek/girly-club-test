@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { getEventById } from "@/lib/events";
 import { supabaseAdmin } from "@/lib/supabase";
@@ -84,33 +85,13 @@ export async function POST(req: NextRequest) {
     // --- Calcul du montant ------------------------------------------------
     const totalPrice = event.pricePerPerson * numParticipants;
 
-    // --- Création de la réservation "pending" --------------------------------
-    const { data: reservation, error: insertError } = await supabaseAdmin
-      .from("reservations")
-      .insert({
-        event_id: event.id,
-        event_title: event.title,
-        event_date: event.date,
-        contact_name: contactName,
-        contact_email: contactEmail,
-        contact_phone: contactPhone,
-        participants,
-        num_participants: numParticipants,
-        total_price: totalPrice,
-        status: "pending",
-      })
-      .select()
-      .single();
-
-    if (insertError || !reservation) {
-      console.error("Erreur Supabase (insert):", insertError?.message);
-      return NextResponse.json(
-        { error: "Impossible de créer la réservation. Réessaie." },
-        { status: 500 }
-      );
-    }
-
     // --- Création de la session Stripe Checkout ------------------------------
+    // On génère l'id de la réservation nous-mêmes (au lieu de laisser
+    // Supabase le générer à l'insertion) pour pouvoir le passer à Stripe
+    // dès la création de la session, et n'avoir qu'un seul insert ensuite
+    // — pas d'aller-retour supplémentaire pour rattacher stripe_session_id.
+    const reservationId = randomUUID();
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
@@ -129,17 +110,35 @@ export async function POST(req: NextRequest) {
         },
       ],
       metadata: {
-        reservation_id: reservation.id,
+        reservation_id: reservationId,
       },
       success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/?booking=cancelled`,
     });
 
-    // On rattache l'id de session Stripe à la réservation
-    await supabaseAdmin
-      .from("reservations")
-      .update({ stripe_session_id: session.id })
-      .eq("id", reservation.id);
+    // --- Création de la réservation "pending" --------------------------------
+    const { error: insertError } = await supabaseAdmin.from("reservations").insert({
+      id: reservationId,
+      event_id: event.id,
+      event_title: event.title,
+      event_date: event.date,
+      contact_name: contactName,
+      contact_email: contactEmail,
+      contact_phone: contactPhone,
+      participants,
+      num_participants: numParticipants,
+      total_price: totalPrice,
+      status: "pending",
+      stripe_session_id: session.id,
+    });
+
+    if (insertError) {
+      console.error("Erreur Supabase (insert):", insertError.message);
+      return NextResponse.json(
+        { error: "Impossible de créer la réservation. Réessaie." },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({ url: session.url });
   } catch (err) {

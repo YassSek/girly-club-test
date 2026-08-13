@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Bouton "invert on hover" en bordeaux plein — répété à l'identique sur
+   plusieurs CTA (carte événement, formulaire de réservation), centralisé
+   ici pour n'avoir qu'un seul endroit à ajuster. */
+@layer components {
+  .btn-bordeaux {
+    @apply border border-bordeaux bg-bordeaux text-paper transition-colors duration-300 hover:bg-paper hover:text-bordeaux disabled:cursor-not-allowed disabled:opacity-50;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
