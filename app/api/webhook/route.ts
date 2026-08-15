@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { supabaseAdmin } from "@/lib/supabase";
+import { sendBookingConfirmationEmail } from "@/lib/email";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -28,7 +29,7 @@ export async function POST(req: NextRequest) {
     const reservationId = session.metadata?.reservation_id;
 
     if (reservationId) {
-      const { error } = await supabaseAdmin
+      const { data: reservation, error } = await supabaseAdmin
         .from("reservations")
         .update({
           status: "confirmed",
@@ -37,12 +38,18 @@ export async function POST(req: NextRequest) {
               ? session.payment_intent
               : session.payment_intent?.id ?? null,
         })
-        .eq("id", reservationId);
+        .eq("id", reservationId)
+        .select()
+        .single();
 
-      if (error) {
-        console.error("Erreur Supabase (confirm reservation):", error.message);
+      if (error || !reservation) {
+        console.error("Erreur Supabase (confirm reservation):", error?.message);
         // On renvoie quand même 200 pour ne pas faire boucler Stripe indéfiniment ;
         // à surveiller manuellement via les logs si ça arrive.
+      } else {
+        // Ne bloque jamais la confirmation en cas de souci d'envoi (voir
+        // lib/email.ts — no-op tant que le domaine/SMTP n'est pas configuré).
+        await sendBookingConfirmationEmail(reservation);
       }
     }
   }

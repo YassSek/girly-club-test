@@ -92,9 +92,21 @@ Pour l'instant, chaque carte affiche un dégradé bordeaux/noir en attendant tes
 
 ---
 
-## 8. Prochaines étapes possibles
+## 8. Email de confirmation de réservation
 
-- Emails de confirmation automatiques (ex: via Resend ou Supabase Edge Functions déclenchées sur `checkout.session.completed`).
+Dès qu'un paiement est confirmé, le site essaie d'envoyer un email récapitulatif à la cliente — via `lib/email.ts`, avec Nodemailer (une librairie standard, pas un service tiers avec compte à créer). Tant que les variables `SMTP_*` ne sont pas renseignées, rien n'est envoyé et le site continue de fonctionner normalement.
+
+Pour l'activer une fois le nom de domaine acquis :
+1. Crée une adresse email sur ton domaine (ex: `reservations@thegirlyclub.fr`) chez ton hébergeur (OVH, Google Workspace, etc.)
+2. Récupère les identifiants SMTP de cette boîte (hôte, port, utilisateur, mot de passe — dans la doc "SMTP" de ton fournisseur d'email)
+3. Renseigne `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` dans les variables d'environnement (Vercel + `.env.local`)
+
+L'envoi s'active alors automatiquement, sans toucher au code.
+
+---
+
+## 9. Prochaines étapes possibles
+
 - Liste d'attente automatique quand un événement est complet.
 - Un espace « mes réservations » si tu introduis un système de compte plus tard.
 - Un petit panneau d'admin pour créer les événements sans toucher au code, si la gestion via `events.ts` devient limitante.
