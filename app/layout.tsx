@@ -31,6 +31,7 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://thegirlyclub.fr"),
   title: "The Girly Club — Rejoins l'expérience",
   description:
     "Une communauté lifestyle féminine premium. Pilates, déjeuners, dîners et expériences dans des lieux d'exception.",

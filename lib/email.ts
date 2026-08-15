@@ -10,13 +10,12 @@ import { ReservationRow } from "./supabase";
 // variables SMTP_* ne sont pas renseignées, cette fonction ne fait rien
 // — le site continue de fonctionner normalement, juste sans email.
 //
-// Pour l'activer une fois le nom de domaine acquis :
-// 1. Crée une adresse email sur ton domaine (ex: reservations@thegirlyclub.fr),
-//    via ton hébergeur (OVH, Google Workspace, etc. — chacun a une section
-//    "Emails" dans son offre de domaine).
-// 2. Récupère les identifiants SMTP de cette boîte mail (hébergeur ou
-//    documentation "SMTP" de ton fournisseur) : hôte, port, utilisateur,
-//    mot de passe.
+// Pour l'activer une fois le domaine (thegirlyclub.fr) vérifié :
+// 1. Crée une adresse email sur le domaine (ex: reservations@thegirlyclub.fr)
+//    depuis Hostinger → Emails, dans le panneau du compte.
+// 2. Récupère les identifiants SMTP de cette boîte (Hostinger → Emails →
+//    "Configuration du client de messagerie" ou équivalent) : hôte, port,
+//    utilisateur, mot de passe.
 // 3. Renseigne SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM dans
 //    les variables d'environnement (Vercel + .env.local).
 // L'envoi s'active alors automatiquement, sans toucher au code.

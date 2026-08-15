@@ -67,8 +67,9 @@ Pense à lancer `stripe listen --forward-to localhost:3000/api/webhook` dans un 
 
 1. Pousse le projet sur un repo GitHub.
 2. Va sur [vercel.com](https://vercel.com), **Add New Project**, importe le repo.
-3. Dans les paramètres du projet Vercel, ajoute les variables d'environnement (`NEXT_PUBLIC_SITE_URL`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`) — les mêmes que dans `.env.local`, mais avec `NEXT_PUBLIC_SITE_URL` = ton vrai domaine, et les clés Stripe **live** (`sk_live_...`) une fois prêt à encaisser pour de vrai.
-4. Déploie. Puis crée ton webhook Stripe de production (étape 3 ci-dessus) en pointant vers `https://ton-domaine.com/api/webhook`.
+3. Dans les paramètres du projet Vercel, ajoute les variables d'environnement (`NEXT_PUBLIC_SITE_URL`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`) — les mêmes que dans `.env.local`, mais avec `NEXT_PUBLIC_SITE_URL` = `https://thegirlyclub.fr`, et les clés Stripe **live** (`sk_live_...`) une fois prêt à encaisser pour de vrai.
+4. Déploie. Puis crée ton webhook Stripe de production (étape 3 de la section 3) en pointant vers `https://thegirlyclub.fr/api/webhook`.
+5. Connecte le domaine `thegirlyclub.fr` (acheté chez Hostinger) : **Vercel → Settings → Domains → Add**, puis ajoute chez Hostinger (DNS / Zone DNS) les enregistrements que Vercel affiche. Une fois la propagation faite (Vercel affiche un ✅), le HTTPS est généré automatiquement.
 
 ---
 
@@ -82,13 +83,15 @@ Les autres textes fixes du site (menus, boutons, formulaire, messages) se modifi
 
 ---
 
-## 7. Ajouter les vraies photos
+## 7. Ajouter/changer les photos des événements
 
-Pour l'instant, chaque carte affiche un dégradé bordeaux/noir en attendant tes visuels (comme indiqué dans le brief). Pour les remplacer :
+Chaque événement avec une image (`lib/events.ts`, champ `image`) affiche sa photo en entier sur la carte, sans recadrage (`object-contain`) — pratique vu que tes visuels actuels sont des "cartes postales" avec titre/date déjà incrustés dans l'image. Un événement sans `image` (chaîne vide `""`) affiche un dégradé bordeaux/noir à la place, en attendant.
 
-1. Héberge tes photos (Supabase Storage, ou tout autre CDN).
-2. Renseigne l'URL dans le champ `image` de l'événement concerné, dans `lib/events.ts`.
-3. Adapte `components/EventCard.tsx` pour afficher une balise `<Image>` (next/image) à la place du dégradé quand `event.image` n'est pas vide — dis-moi si tu veux que je fasse cette modification une fois tes photos prêtes.
+Pour changer une photo :
+1. Dépose le fichier dans `public/images/events/`.
+2. Renseigne son chemin dans le champ `image` de l'événement concerné, dans `lib/events.ts` (ex: `/images/events/mon-fichier.jpg`).
+
+Si un futur visuel a un format très différent (paysage, carré...) du format portrait actuel (~900×1272), dis-le-moi — le cadre de la carte (`aspect-[900/1272]` dans `components/EventCard.tsx`) est calé sur ce format précis pour qu'il n'y ait aucune bande visible.
 
 ---
 
@@ -96,9 +99,9 @@ Pour l'instant, chaque carte affiche un dégradé bordeaux/noir en attendant tes
 
 Dès qu'un paiement est confirmé, le site essaie d'envoyer un email récapitulatif à la cliente — via `lib/email.ts`, avec Nodemailer (une librairie standard, pas un service tiers avec compte à créer). Tant que les variables `SMTP_*` ne sont pas renseignées, rien n'est envoyé et le site continue de fonctionner normalement.
 
-Pour l'activer une fois le nom de domaine acquis :
-1. Crée une adresse email sur ton domaine (ex: `reservations@thegirlyclub.fr`) chez ton hébergeur (OVH, Google Workspace, etc.)
-2. Récupère les identifiants SMTP de cette boîte (hôte, port, utilisateur, mot de passe — dans la doc "SMTP" de ton fournisseur d'email)
+Pour l'activer une fois le domaine `thegirlyclub.fr` vérifié :
+1. Crée une adresse email sur le domaine (ex: `reservations@thegirlyclub.fr`) depuis **Hostinger → Emails**
+2. Récupère les identifiants SMTP de cette boîte (Hostinger → Emails → configuration du client de messagerie) : hôte, port, utilisateur, mot de passe
 3. Renseigne `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` dans les variables d'environnement (Vercel + `.env.local`)
 
 L'envoi s'active alors automatiquement, sans toucher au code.
