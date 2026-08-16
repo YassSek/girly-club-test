@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 // Icônes minimalistes (traits fins, cohérentes avec l'identité graphique).
-// Remplace les href="#" par les vraies URLs une fois tes comptes prêts.
 
 function InstagramIcon() {
   return (
@@ -12,19 +11,6 @@ function InstagramIcon() {
       <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
       <circle cx="12" cy="12" r="4.2" />
       <circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-function WhatsAppIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M6.6 17.4 4 20l2.7-.7A8.4 8.4 0 1 0 4 12.4 8.3 8.3 0 0 0 6.6 17.4Z" />
-      <path
-        d="M9.2 10.1c.3 2 2 3.6 3.9 3.9.5.1.9-.1 1.2-.5l.3-.5c.2-.3.1-.6-.2-.8l-1.1-.7c-.3-.2-.6-.1-.8.1l-.3.3c-.8-.4-1.5-1.1-1.9-1.9l.3-.3c.2-.2.3-.5.1-.8l-.7-1.1c-.2-.3-.5-.4-.8-.2l-.5.3c-.4.3-.6.7-.5 1.2Z"
-        fill="currentColor"
-        stroke="none"
-      />
     </svg>
   );
 }
@@ -39,9 +25,8 @@ function TikTokIcon() {
 }
 
 const socials = [
-  { name: "Instagram", href: "#", Icon: InstagramIcon },
-  { name: "WhatsApp", href: "#", Icon: WhatsAppIcon },
-  { name: "TikTok", href: "#", Icon: TikTokIcon },
+  { name: "Instagram", href: "https://www.instagram.com/thegirlyclubgc", Icon: InstagramIcon },
+  { name: "TikTok", href: "https://www.tiktok.com/@the.girlyclub", Icon: TikTokIcon },
 ];
 
 export default function Footer() {
@@ -59,6 +44,8 @@ export default function Footer() {
             <a
               key={name}
               href={href}
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label={name}
               className="flex h-12 w-12 items-center justify-center rounded-full border border-bordeaux/60 bg-bordeaux/10 text-paper transition-colors duration-300 hover:border-bordeaux hover:bg-bordeaux"
             >
