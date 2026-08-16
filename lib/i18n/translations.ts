@@ -63,9 +63,6 @@ export type Dictionary = {
     title: string;
     introParagraphs: string[];
     pullQuotes: string[];
-    photoComingSoon: string;
-    subtitle: string;
-    body: string;
   };
   success: {
     thanks: string;
@@ -152,9 +149,6 @@ const dictionary: Record<Locale, Dictionary> = {
         "Découvrir un lieu, vivre quelque chose de différent et surtout, le partager avec des femmes inspirantes.",
         "Des lieux d'exception, des expériences atypiques, et des femmes qui ont envie de vivre plus.",
       ],
-      photoComingSoon: "Photo à venir",
-      subtitle: "L'esprit du club",
-      body: "Un deuxième texte peut venir ici — envoie-moi le contenu quand tu es prête.",
     },
     success: {
       thanks: "Merci",
@@ -238,9 +232,6 @@ const dictionary: Record<Locale, Dictionary> = {
       pullQuotes: [
         "A placeholder quote can go here — a short, evocative line from your real story.",
       ],
-      photoComingSoon: "Photo coming soon",
-      subtitle: "The spirit of the club",
-      body: "A second block of text can go here — send me the content whenever you're ready.",
     },
     success: {
       thanks: "Thank you",

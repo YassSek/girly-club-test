@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
@@ -64,20 +65,16 @@ export default function AboutContent() {
       </section>
 
       <section className="mx-auto max-w-5xl px-6 pb-20">
-        <div className="relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden bg-gradient-to-br from-ink via-bordeaux to-ink">
-          <p className="font-vibes text-4xl text-paper/80">
-            {t.about.photoComingSoon}
-          </p>
+        <div className="relative aspect-[1408/768] w-full overflow-hidden">
+          <Image
+            src="/images/gallery/aboutimg.jpg"
+            alt={t.about.title}
+            fill
+            sizes="(max-width: 1024px) 100vw, 1024px"
+            quality={90}
+            className="object-cover"
+          />
         </div>
-      </section>
-
-      <section className="mx-auto max-w-3xl px-6 pb-24 text-center">
-        <h2 className="text-2xl font-bold uppercase sm:text-3xl">
-          {t.about.subtitle}
-        </h2>
-        <p className="mt-6 text-base leading-relaxed text-ink/70">
-          {t.about.body}
-        </p>
       </section>
 
       <Footer />
