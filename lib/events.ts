@@ -155,22 +155,6 @@ export const events: GirlyEvent[] = [
     },
     bookable: false,
   },
-  // Carte temporaire pour tester un vrai paiement Stripe (montant minimum
-  // possible en EUR). À retirer avant que de vraies clientes visitent le
-  // site — voir NOTES-DEV.md.
-  {
-    id: "test-paiement-stripe",
-    title: "Test",
-    city: "Test",
-    venue: "Carte interne — ne pas réserver",
-    date: "—",
-    time: "—",
-    pricePerPerson: 0.5,
-    maxParticipants: 1,
-    maxPerBooking: 1,
-    description: "",
-    image: "",
-  },
 ];
 
 export function getEventById(id: string): GirlyEvent | undefined {
