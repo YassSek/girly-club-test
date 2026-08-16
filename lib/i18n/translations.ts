@@ -226,11 +226,13 @@ const dictionary: Record<Locale, Dictionary> = {
       kicker: "About us",
       title: "Our story",
       introParagraphs: [
-        "The Girly Club's introduction will go here soon.",
-        "In the meantime, this placeholder keeps the layout ready for your final content — send me the real text (in French and English) whenever you're ready.",
+        "The Girly Club was born from a simple desire: to create moments you truly want to live.",
+        "From Paris to Cannes, from Brussels to Geneva, we design experiences in places that step outside the ordinary: a Pilates session on the Seine, a lunch by the pool, a dinner at a hidden address, or an experience crafted specially for our community.",
+        "Because The Girly Club isn't just a string of events. It's a community that comes together, meets, and grows with every experience.",
       ],
       pullQuotes: [
-        "A placeholder quote can go here — a short, evocative line from your real story.",
+        "Discovering a place, living something different, and above all, sharing it with inspiring women.",
+        "Exceptional venues, unconventional experiences, and women who want to live more.",
       ],
     },
     success: {
