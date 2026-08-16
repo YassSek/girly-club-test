@@ -3,8 +3,6 @@
 import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
-// Icônes minimalistes (traits fins, cohérentes avec l'identité graphique).
-
 function InstagramIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
@@ -34,7 +32,6 @@ export default function Footer() {
 
   return (
     <footer className="bg-ink py-12 text-center text-paper/60">
-      {/* Réseaux sociaux — liens à renseigner plus tard (href="#" pour l'instant) */}
       <div className="mx-auto flex max-w-xs flex-col items-center gap-4">
         <p className="text-xs uppercase tracking-widest2 text-paper">
           {t.footer.followUs}

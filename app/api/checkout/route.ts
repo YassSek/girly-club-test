@@ -25,7 +25,6 @@ export async function POST(req: NextRequest) {
       sessionIds?: string[];
     };
 
-    // --- Validation de base ---------------------------------------------
     const event = getEventById(eventId);
     if (!event) {
       return NextResponse.json({ error: "Événement introuvable." }, { status: 404 });
@@ -70,7 +69,6 @@ export async function POST(req: NextRequest) {
 
     const numParticipants = participants.length;
 
-    // --- Vérification des places restantes --------------------------------
     const { data: confirmedRows, error: fetchError } = await supabaseAdmin
       .from("reservations")
       .select("num_participants, session_ids")
@@ -87,8 +85,6 @@ export async function POST(req: NextRequest) {
 
     let spotsLeft: number;
     if (event.sessions) {
-      // Capacité indépendante par créneau : une réservation qui couvre
-      // plusieurs créneaux est limitée par le plus juste d'entre eux.
       const bookedBySession = new Map<string, number>();
       for (const row of confirmedRows ?? []) {
         for (const sid of (row.session_ids ?? []) as string[]) {
@@ -120,14 +116,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // --- Calcul du montant ------------------------------------------------
     const totalPrice = event.pricePerPerson * numParticipants;
 
-    // --- Création de la session Stripe Checkout ------------------------------
-    // On génère l'id de la réservation nous-mêmes (au lieu de laisser
-    // Supabase le générer à l'insertion) pour pouvoir le passer à Stripe
-    // dès la création de la session, et n'avoir qu'un seul insert ensuite
-    // — pas d'aller-retour supplémentaire pour rattacher stripe_session_id.
     const reservationId = randomUUID();
 
     const sessionLabel = event.sessions
@@ -163,7 +153,6 @@ export async function POST(req: NextRequest) {
       cancel_url: `${siteUrl}/?booking=cancelled`,
     });
 
-    // --- Création de la réservation "pending" --------------------------------
     const { error: insertError } = await supabaseAdmin.from("reservations").insert({
       id: reservationId,
       event_id: event.id,

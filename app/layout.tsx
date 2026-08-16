@@ -20,8 +20,6 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-// Corps de texte : plus lisible que Playfair Display en petite taille
-// (descriptions d'événements, formulaire, paragraphes...).
 const raleway = Raleway({
   subsets: ["latin"],
   style: ["normal", "italic"],

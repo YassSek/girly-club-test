@@ -1,10 +1,3 @@
-// -----------------------------------------------------------------------
-// Dictionnaire FR / EN pour tous les textes fixes de l'interface (nav,
-// header, footer, formulaire, messages...). Le contenu des événements
-// (titre, lieu, description) se traduit séparément dans lib/events.ts,
-// via le champ optionnel `en` de chaque événement.
-// -----------------------------------------------------------------------
-
 export type Locale = "fr" | "en";
 
 export type Dictionary = {
@@ -266,12 +259,6 @@ const dictionary: Record<Locale, Dictionary> = {
 export function getDictionary(locale: Locale): Dictionary {
   return dictionary[locale];
 }
-
-// -----------------------------------------------------------------------
-// Traduction des dates/horaires écrits en français dans lib/events.ts
-// (ex: "25 août 2026", "à confirmer") quand aucune traduction manuelle
-// n'est fournie sur l'événement.
-// -----------------------------------------------------------------------
 
 const KNOWN_PHRASES: Record<string, string> = {
   "à confirmer": "to be confirmed",

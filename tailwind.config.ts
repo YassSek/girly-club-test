@@ -13,11 +13,8 @@ const config: Config = {
         paper: "#FFFFFF",
       },
       fontFamily: {
-        // H1 / moments émotionnels
         vibes: ["var(--font-vibes)", "cursive"],
-        // Titres, boutons, petits labels en majuscules
         playfair: ["var(--font-playfair)", "serif"],
-        // Corps de texte : descriptions, formulaires, paragraphes
         raleway: ["var(--font-raleway)", "sans-serif"],
       },
       letterSpacing: {

@@ -3,20 +3,12 @@
 import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
-// -----------------------------------------------------------------------
-// Fond du header : bordeaux uni pour l'instant. Après les premiers
-// événements, on pourra remplacer par une vidéo de fond (pas maintenant) —
-// il suffira d'ajouter un <video> en absolute inset-0 avec object-cover,
-// comme pour les photos des cartes d'événements.
-// -----------------------------------------------------------------------
-
 export default function Header() {
   const { t } = useLanguage();
 
   return (
     <header className="bg-bordeaux text-paper">
       <div className="mx-auto flex max-w-6xl flex-col items-center px-6 pb-16 pt-24 text-center sm:pb-24 sm:pt-32">
-        {/* Même typo/couleur que la phrase d'accroche juste en dessous. */}
         <p className="mb-4 font-playfair text-base italic text-paper/80 sm:text-lg">
           {t.header.cities}
         </p>
@@ -29,8 +21,6 @@ export default function Header() {
             priority
           />
         </div>
-        {/* Le slogan reste volontairement en Playfair Display (registre
-            display), même si le reste du texte du site est en Raleway. */}
         <p className="mt-6 max-w-xl whitespace-pre-line font-playfair text-base italic text-paper/80 sm:text-lg">
           {t.header.tagline}
         </p>

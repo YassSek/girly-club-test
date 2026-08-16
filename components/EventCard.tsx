@@ -20,9 +20,6 @@ export default function EventCard({ event, spotsLeft, onSelect }: Props) {
   const { locale, t } = useLanguage();
   const L = localizeEvent(event, locale);
 
-  // Sur un événement non réservable : soit on affiche une note explicative
-  // (ex: inclus dans une autre réservation), soit le bouton est juste
-  // désactivé (ex: prix/places pas encore définis).
   function handleActivate() {
     if (notBookable) {
       if (notice) setShowNotice(true);
@@ -42,7 +39,6 @@ export default function EventCard({ event, spotsLeft, onSelect }: Props) {
 
   return (
     <div className="group flex w-[300px] shrink-0 snap-start flex-col overflow-hidden border border-ink/10 bg-paper text-left transition-shadow duration-300 hover:shadow-xl sm:w-[340px]">
-      {/* Visuel — cliquable pour réserver */}
       <button
         type="button"
         onClick={handleActivate}
@@ -71,9 +67,6 @@ export default function EventCard({ event, spotsLeft, onSelect }: Props) {
         )}
       </button>
 
-      {/* Infos — le texte reste tronqué par défaut (même hauteur pour
-          toutes les cartes) ; "Voir les détails" déplie le texte complet
-          et ne déforme que la carte concernée. */}
       <div className="flex flex-1 flex-col gap-3 p-6">
         <p className="line-clamp-1 text-xs uppercase tracking-widest2 text-bordeaux">
           {L.city} · {L.date}
@@ -132,9 +125,6 @@ export default function EventCard({ event, spotsLeft, onSelect }: Props) {
         </button>
       </div>
 
-      {/* Note explicative pour un événement inclus dans une autre
-          réservation (ex: Bloom Concept) — remplace le formulaire de
-          réservation par une simple explication. */}
       {showNotice && notice && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 p-4"

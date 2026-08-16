@@ -44,11 +44,7 @@ export async function POST(req: NextRequest) {
 
       if (error || !reservation) {
         console.error("Erreur Supabase (confirm reservation):", error?.message);
-        // On renvoie quand même 200 pour ne pas faire boucler Stripe indéfiniment ;
-        // à surveiller manuellement via les logs si ça arrive.
       } else {
-        // Ne bloque jamais la confirmation en cas de souci d'envoi (voir
-        // lib/email.ts — no-op tant que le domaine/SMTP n'est pas configuré).
         await sendBookingConfirmationEmail(reservation);
       }
     }

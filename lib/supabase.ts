@@ -1,12 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 
-// -----------------------------------------------------------------------
-// Ce client utilise la clé "service_role" : il ne doit JAMAIS être importé
-// dans un composant client ("use client") ni exposé au navigateur.
-// Il n'est utilisé que côté serveur : Server Components, Route Handlers
-// (app/api/.../route.ts).
-// -----------------------------------------------------------------------
-
+// ⚠️ Clé service_role — jamais dans un composant "use client", serveur uniquement.
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 

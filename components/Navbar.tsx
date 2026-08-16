@@ -29,7 +29,6 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Bascule FR / EN */}
           <button
             type="button"
             onClick={toggleLocale}

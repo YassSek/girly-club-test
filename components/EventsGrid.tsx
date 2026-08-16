@@ -33,7 +33,6 @@ export default function EventsGrid({
           </h2>
         </div>
 
-        {/* Petit repère qui indique qu'on peut glisser horizontalement */}
         <p className="mb-6 flex items-center justify-center gap-2 text-xs uppercase tracking-widest2 text-ink/40">
           {t.eventsGrid.swipeHint}
           <span aria-hidden className="animate-swipe-hint inline-block">
@@ -41,9 +40,6 @@ export default function EventsGrid({
           </span>
         </p>
 
-        {/* Toutes les cartes sur une seule ligne, défilement horizontal fluide.
-            Le padding gauche est plus généreux pour que la première carte
-            paraisse centrée plutôt que collée au bord. */}
         <div className="relative">
           <div className="flex snap-x snap-mandatory scroll-px-8 gap-6 overflow-x-auto px-8 pb-4 sm:scroll-px-16 sm:px-16 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {events.map((event, i) => (
@@ -60,8 +56,6 @@ export default function EventsGrid({
               </div>
             ))}
           </div>
-          {/* Léger fondu sur le bord droit pour suggérer qu'il y a d'autres
-              cartes hors champ */}
           <div
             aria-hidden
             className="pointer-events-none absolute inset-y-0 right-0 hidden w-16 bg-gradient-to-l from-paper to-transparent sm:block"

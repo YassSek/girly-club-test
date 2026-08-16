@@ -11,8 +11,6 @@ type Props = {
   onClose: () => void;
 };
 
-// Classes réutilisées telles quelles à plusieurs endroits du formulaire —
-// centralisées ici pour n'avoir qu'un seul endroit à modifier.
 const FIELD_LABEL_CLASS = "block text-xs font-bold uppercase tracking-widest2";
 const TEXT_INPUT_CLASS =
   "w-full border border-ink/20 px-4 py-2.5 text-sm focus:border-bordeaux";
@@ -30,10 +28,6 @@ export default function BookingModal({
 
   const [selectedSessions, setSelectedSessions] = useState<string[]>([]);
 
-  // Places réellement disponibles pour la sélection en cours : si
-  // l'événement a des créneaux, c'est le minimum des créneaux choisis
-  // (une réservation qui couvre plusieurs créneaux ne peut pas dépasser
-  // la capacité du plus juste d'entre eux) ; sinon, la capacité globale.
   const effectiveSpotsLeft = useMemo(() => {
     if (!event.sessions || !sessionsAvailability) return spotsLeft;
     if (selectedSessions.length === 0) return 0;
@@ -53,7 +47,6 @@ export default function BookingModal({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Ferme la modale avec Échap
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === "Escape") onClose();
@@ -66,7 +59,6 @@ export default function BookingModal({
     };
   }, [onClose]);
 
-  // Ajuste dynamiquement le nombre de champs "nom de la participante"
   useEffect(() => {
     setParticipantNames((prev) => {
       const next = [...prev];
@@ -76,8 +68,6 @@ export default function BookingModal({
     });
   }, [numParticipants]);
 
-  // Si le nombre choisi dépasse ce que permettent les créneaux
-  // sélectionnés (ex: on décoche un créneau), on le ramène dans les clous.
   useEffect(() => {
     setNumParticipants((n) => Math.min(n, maxSelectable));
   }, [maxSelectable]);
@@ -174,7 +164,6 @@ export default function BookingModal({
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Choix du créneau — uniquement pour les événements qui en ont */}
           {L.sessions && (
             <div>
               <label className={FIELD_LABEL_CLASS}>
@@ -217,7 +206,6 @@ export default function BookingModal({
             </div>
           )}
 
-          {/* Nombre de participantes */}
           <div>
             <label className={FIELD_LABEL_CLASS}>
               {t.bookingModal.numParticipants}
@@ -250,7 +238,6 @@ export default function BookingModal({
             </div>
           </div>
 
-          {/* Noms des participantes */}
           <div className="space-y-3">
             <label className={FIELD_LABEL_CLASS}>
               {t.bookingModal.participantNames}
@@ -272,7 +259,6 @@ export default function BookingModal({
             ))}
           </div>
 
-          {/* Coordonnées de contact */}
           <div className="space-y-3">
             <label className={FIELD_LABEL_CLASS}>
               {t.bookingModal.contactDetails}
@@ -303,7 +289,6 @@ export default function BookingModal({
             />
           </div>
 
-          {/* Récapitulatif prix */}
           <div className="space-y-1.5 border-t border-ink/10 pt-5 text-sm">
             <div className="flex justify-between text-ink/60">
               <span>

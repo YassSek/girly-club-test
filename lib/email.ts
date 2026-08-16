@@ -1,26 +1,6 @@
 import nodemailer from "nodemailer";
 import { ReservationRow } from "./supabase";
 
-// -----------------------------------------------------------------------
-// Email de confirmation de réservation, envoyé automatiquement dès qu'un
-// paiement est validé (voir app/api/webhook/route.ts).
-//
-// Utilise Nodemailer (une librairie standard, pas un service tiers) pour
-// envoyer via n'importe quel serveur SMTP classique. Tant que les
-// variables SMTP_* ne sont pas renseignées, cette fonction ne fait rien
-// — le site continue de fonctionner normalement, juste sans email.
-//
-// Pour l'activer une fois le domaine (thegirlyclub.fr) vérifié :
-// 1. Crée une adresse email sur le domaine (ex: reservations@thegirlyclub.fr)
-//    depuis Hostinger → Emails, dans le panneau du compte.
-// 2. Récupère les identifiants SMTP de cette boîte (Hostinger → Emails →
-//    "Configuration du client de messagerie" ou équivalent) : hôte, port,
-//    utilisateur, mot de passe.
-// 3. Renseigne SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_FROM dans
-//    les variables d'environnement (Vercel + .env.local).
-// L'envoi s'active alors automatiquement, sans toucher au code.
-// -----------------------------------------------------------------------
-
 const smtpHost = process.env.SMTP_HOST;
 const smtpPort = process.env.SMTP_PORT;
 const smtpUser = process.env.SMTP_USER;
@@ -32,7 +12,7 @@ const transporter =
     ? nodemailer.createTransport({
         host: smtpHost,
         port: Number(smtpPort),
-        secure: Number(smtpPort) === 465, // 465 = SSL direct, 587 = STARTTLS
+        secure: Number(smtpPort) === 465,
         auth: { user: smtpUser, pass: smtpPass },
       })
     : null;
@@ -53,9 +33,6 @@ export async function sendBookingConfirmationEmail(reservation: ReservationRow) 
       html: buildConfirmationEmailHtml(reservation),
     });
   } catch (err) {
-    // Un souci d'envoi d'email ne doit jamais faire échouer la
-    // confirmation de la réservation elle-même — juste un log pour
-    // pouvoir investiguer a posteriori.
     console.error("Erreur envoi email de confirmation:", err);
   }
 }

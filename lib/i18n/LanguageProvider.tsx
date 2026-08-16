@@ -23,7 +23,6 @@ const STORAGE_KEY = "girly-club-locale";
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("fr");
 
-  // Récupère la langue choisie précédemment (si la visiteuse revient).
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (saved === "fr" || saved === "en") setLocaleState(saved);
