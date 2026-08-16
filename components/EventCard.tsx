@@ -102,24 +102,28 @@ export default function EventCard({ event, spotsLeft, onSelect }: Props) {
           {expanded ? t.eventCard.seeLess : t.eventCard.seeDetails}
         </button>
 
-        <div className="mt-auto flex items-center justify-between pt-4">
-          <span className="text-sm">
-            {t.eventCard.from}{" "}
-            <span className="font-bold text-bordeaux">
-              {event.pricePerPerson}€
-            </span>{" "}
-            {t.eventCard.perPerson}
-          </span>
-          <span className="text-xs uppercase tracking-widest2 text-ink/50">
-            {isFull ? t.eventCard.full : t.eventCard.spot(spotsLeft)}
-          </span>
-        </div>
+        {!notice && (
+          <div className="mt-auto flex items-center justify-between pt-4">
+            <span className="text-sm">
+              {t.eventCard.from}{" "}
+              <span className="font-bold text-bordeaux">
+                {event.pricePerPerson}€
+              </span>{" "}
+              {t.eventCard.perPerson}
+            </span>
+            <span className="text-xs uppercase tracking-widest2 text-ink/50">
+              {isFull ? t.eventCard.full : t.eventCard.spot(spotsLeft)}
+            </span>
+          </div>
+        )}
 
         <button
           type="button"
           onClick={handleActivate}
           disabled={isInert}
-          className="btn-bordeaux mt-2 block w-full px-5 py-2 text-center text-xs font-bold uppercase tracking-widest2"
+          className={`btn-bordeaux block w-full px-5 py-2 text-center text-xs font-bold uppercase tracking-widest2 ${
+            notice ? "mt-auto" : "mt-2"
+          }`}
         >
           {ctaLabel}
         </button>
