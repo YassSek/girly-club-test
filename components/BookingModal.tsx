@@ -7,6 +7,7 @@ import { useLanguage } from "@/lib/i18n/LanguageProvider";
 type Props = {
   event: GirlyEvent;
   spotsLeft: number;
+  sessionsAvailability?: { id: string; spotsLeft: number }[];
   onClose: () => void;
 };
 
@@ -18,14 +19,31 @@ const TEXT_INPUT_CLASS =
 const STEPPER_BUTTON_CLASS =
   "h-9 w-9 border border-ink/20 text-lg hover:border-bordeaux hover:text-bordeaux";
 
-export default function BookingModal({ event, spotsLeft, onClose }: Props) {
+export default function BookingModal({
+  event,
+  spotsLeft,
+  sessionsAvailability,
+  onClose,
+}: Props) {
   const { locale, t } = useLanguage();
   const L = localizeEvent(event, locale);
 
-  const maxSelectable = Math.max(
-    1,
-    Math.min(event.maxPerBooking, spotsLeft)
-  );
+  const [selectedSessions, setSelectedSessions] = useState<string[]>([]);
+
+  // Places réellement disponibles pour la sélection en cours : si
+  // l'événement a des créneaux, c'est le minimum des créneaux choisis
+  // (une réservation qui couvre plusieurs créneaux ne peut pas dépasser
+  // la capacité du plus juste d'entre eux) ; sinon, la capacité globale.
+  const effectiveSpotsLeft = useMemo(() => {
+    if (!event.sessions || !sessionsAvailability) return spotsLeft;
+    if (selectedSessions.length === 0) return 0;
+    const spots = selectedSessions.map(
+      (id) => sessionsAvailability.find((s) => s.id === id)?.spotsLeft ?? 0
+    );
+    return Math.min(...spots);
+  }, [event.sessions, sessionsAvailability, selectedSessions, spotsLeft]);
+
+  const maxSelectable = Math.max(1, Math.min(event.maxPerBooking, effectiveSpotsLeft));
 
   const [numParticipants, setNumParticipants] = useState(1);
   const [participantNames, setParticipantNames] = useState<string[]>([""]);
@@ -58,6 +76,12 @@ export default function BookingModal({ event, spotsLeft, onClose }: Props) {
     });
   }, [numParticipants]);
 
+  // Si le nombre choisi dépasse ce que permettent les créneaux
+  // sélectionnés (ex: on décoche un créneau), on le ramène dans les clous.
+  useEffect(() => {
+    setNumParticipants((n) => Math.min(n, maxSelectable));
+  }, [maxSelectable]);
+
   const totalPrice = useMemo(
     () => event.pricePerPerson * numParticipants,
     [event.pricePerPerson, numParticipants]
@@ -71,10 +95,20 @@ export default function BookingModal({ event, spotsLeft, onClose }: Props) {
     });
   }
 
+  function toggleSession(id: string) {
+    setSelectedSessions((prev) =>
+      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
+    );
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
 
+    if (event.sessions && selectedSessions.length === 0) {
+      setError(t.bookingModal.errorMissingSession);
+      return;
+    }
     if (participantNames.some((n) => n.trim().length === 0)) {
       setError(t.bookingModal.errorMissingNames);
       return;
@@ -95,6 +129,7 @@ export default function BookingModal({ event, spotsLeft, onClose }: Props) {
           contactName: contactName.trim(),
           contactEmail: contactEmail.trim(),
           contactPhone: contactPhone.trim(),
+          sessionIds: event.sessions ? selectedSessions : undefined,
         }),
       });
 
@@ -139,6 +174,49 @@ export default function BookingModal({ event, spotsLeft, onClose }: Props) {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Choix du créneau — uniquement pour les événements qui en ont */}
+          {L.sessions && (
+            <div>
+              <label className={FIELD_LABEL_CLASS}>
+                {t.bookingModal.chooseSession}
+              </label>
+              <div className="mt-2 space-y-2">
+                {L.sessions.map((session) => {
+                  const sessionSpots =
+                    sessionsAvailability?.find((s) => s.id === session.id)?.spotsLeft ?? 0;
+                  const sessionFull = sessionSpots <= 0;
+                  const checked = selectedSessions.includes(session.id);
+                  return (
+                    <label
+                      key={session.id}
+                      className={`flex items-center justify-between gap-3 border px-4 py-2.5 text-sm ${
+                        sessionFull
+                          ? "cursor-not-allowed border-ink/10 text-ink/30"
+                          : "cursor-pointer border-ink/20 hover:border-bordeaux"
+                      }`}
+                    >
+                      <span className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          disabled={sessionFull}
+                          onChange={() => toggleSession(session.id)}
+                          className="accent-bordeaux"
+                        />
+                        {session.label}
+                      </span>
+                      {sessionFull && (
+                        <span className="text-xs uppercase tracking-widest2">
+                          {t.bookingModal.sessionFull}
+                        </span>
+                      )}
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           {/* Nombre de participantes */}
           <div>
             <label className={FIELD_LABEL_CLASS}>

@@ -16,6 +16,7 @@ create table if not exists reservations (
   participants jsonb not null,           -- ex: ["Claire Dupont", "Léa Martin"]
   num_participants integer not null check (num_participants > 0),
   total_price numeric(10, 2) not null,
+  session_ids jsonb,                     -- créneaux choisis, ex: ["matin"] — null si l'événement n'a pas de créneaux
   stripe_session_id text unique,
   stripe_payment_intent_id text,
   status text not null default 'pending' check (status in ('pending', 'confirmed', 'cancelled')),
@@ -41,4 +42,9 @@ alter table reservations enable row level security;
 -- mettre à jour (le site ne fonctionne plus qu'avec un paiement total) :
 --
 --   alter table reservations drop column if exists deposit_amount;
+--
+-- Migration : si ta table existe déjà sans la colonne session_ids
+-- (événements avec créneaux, ex: matin/après-midi), lance :
+--
+--   alter table reservations add column if not exists session_ids jsonb;
 -- -----------------------------------------------------------------------

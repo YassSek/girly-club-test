@@ -81,6 +81,27 @@ Le site a un bouton FR/EN dans la navbar (voir `lib/i18n/`). Pour qu'un événem
 
 Les autres textes fixes du site (menus, boutons, formulaire, messages) se modifient dans `lib/i18n/translations.ts`.
 
+**⚠️ Ta base Supabase a été créée avant l'ajout des créneaux** : lance la migration en bas de `supabase/schema.sql` (`alter table reservations add column if not exists session_ids jsonb;`) dans le SQL Editor — nécessaire pour que les événements à créneaux ci-dessous fonctionnent.
+
+### Événement avec plusieurs créneaux (ex: matin/après-midi)
+
+Ajoute un champ `sessions` à l'événement, chaque créneau ayant sa propre capacité :
+
+```ts
+sessions: [
+  { id: "matin", label: "Matin · 10h-14h", maxParticipants: 7, en: { label: "Morning · 10am-2pm" } },
+  { id: "apres-midi", label: "Après-midi · 14h30-18h", maxParticipants: 8, en: { label: "Afternoon · 2:30pm-6pm" } },
+],
+```
+
+La cliente choisit alors un ou plusieurs créneaux dans le formulaire, et les places sont suivies séparément pour chacun. Le `maxParticipants` de l'événement lui-même devient juste indicatif dans ce cas.
+
+### Événement non réservable
+
+Mets `bookable: false` sur un événement pour désactiver son bouton de réservation (badge "Bientôt disponible") — pratique pour un événement dont le prix/les places ne sont pas encore fixés.
+
+Ajoute en plus `includedNotice: { fr: "...", en: "..." }` si tu veux qu'un clic affiche un message explicatif plutôt qu'un bouton simplement désactivé (ex: un événement inclus automatiquement dans une autre réservation, comme l'after-pilates Bloom Concept).
+
 ---
 
 ## 7. Ajouter/changer les photos des événements

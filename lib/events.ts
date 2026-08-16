@@ -18,9 +18,31 @@
 // vraie expérience bilingue. `date`/`time` sont traduits automatiquement
 // (voir lib/i18n/translations.ts) tant qu'ils gardent le format habituel
 // ("25 août 2026", "à confirmer"...).
+//
+// `sessions` : optionnel — pour un événement avec plusieurs créneaux ayant
+// chacun leur propre capacité (ex: matin/après-midi). Si présent, la
+// cliente choisit un ou plusieurs créneaux dans le formulaire, et les
+// places restantes sont suivies séparément par créneau. `maxParticipants`
+// au niveau de l'événement devient alors juste indicatif (la somme des
+// créneaux) — c'est `sessions[].maxParticipants` qui fait foi.
+//
+// `bookable` : mets à `false` pour désactiver la réservation sur un
+// événement (bouton visible mais inactif, badge "Bientôt disponible").
+// Si en plus tu renseignes `includedNotice`, un clic affiche ce message
+// à la place d'ouvrir le formulaire — utile pour un événement inclus
+// automatiquement dans une autre réservation plutôt que "pas encore prêt".
 // -----------------------------------------------------------------------
 
 import { Locale, translateDateLike } from "./i18n/translations";
+
+export type EventSession = {
+  id: string;
+  label: string; // ex: "Matin · 10h-14h"
+  maxParticipants: number;
+  en?: {
+    label?: string;
+  };
+};
 
 export type GirlyEvent = {
   id: string;
@@ -40,6 +62,9 @@ export type GirlyEvent = {
     venue?: string;
     description?: string;
   };
+  sessions?: EventSession[];
+  bookable?: boolean; // défaut : true
+  includedNotice?: { fr: string; en: string };
 };
 
 export const events: GirlyEvent[] = [
@@ -51,7 +76,7 @@ export const events: GirlyEvent[] = [
     date: "25 août 2026",
     time: "10h-14h ou 14h30-18h",
     pricePerPerson: 125,
-    maxParticipants: 16,
+    maxParticipants: 15, // indicatif — voir sessions ci-dessous, qui font foi
     maxPerBooking: 4,
     description:
       "Une journée en mer au départ de Cannes, entre Pilates, brunch, baignade et moments entre girls — deux sessions au choix (10h-14h ou 14h30-18h). Une expérience pensée pour profiter de la French Riviera, prendre soin de soi et rencontrer la communauté The Girly Club.\n\nVotre ticket comprend :\n• Séance de Pilates sur le bateau\n• Matériel de Pilates fourni\n• Navigation au départ de Cannes\n• Brunch & boissons\n• Baignade & temps libre à bord\n• Goodie bag The Girly Club\n\nEt parce que la journée ne s'arrête pas au retour au port… votre ticket inclut dès 20h une entrée au The Bloom, sur la Croisette, pour prolonger l'expérience The Girly Club dans un espace entièrement privatisé pour nos participantes. 🍒",
@@ -62,6 +87,20 @@ export const events: GirlyEvent[] = [
       description:
         "A day at sea from Cannes — Pilates, brunch, swimming and quality time between girls, with two sessions to choose from (10am-2pm or 2:30pm-6pm). An experience designed to enjoy the French Riviera, take care of yourself and meet the Girly Club community.\n\nYour ticket includes:\n• Pilates session on the boat\n• Pilates equipment provided\n• Departure from Cannes\n• Brunch & drinks\n• Swimming & free time on board\n• The Girly Club goodie bag\n\nAnd because the day doesn't stop once you're back at the harbour… your ticket includes entry to The Bloom on La Croisette from 8pm, to keep the Girly Club experience going in a space fully privatised for our guests. 🍒",
     },
+    sessions: [
+      {
+        id: "matin",
+        label: "Matin · 10h-14h",
+        maxParticipants: 7,
+        en: { label: "Morning · 10am-2pm" },
+      },
+      {
+        id: "apres-midi",
+        label: "Après-midi · 14h30-18h",
+        maxParticipants: 8,
+        en: { label: "Afternoon · 2:30pm-6pm" },
+      },
+    ],
   },
   {
     id: "pilates-piscine-cannes",
@@ -102,6 +141,13 @@ export const events: GirlyEvent[] = [
       description:
         "After our Pilates session aboard an exceptional boat, join us at Bloom Concept on La Croisette to keep the experience going — even if you didn't book the session on board.",
     },
+    // Événement privé, inclus automatiquement pour les participantes du
+    // Pilates on a Boat / Pilates Pool Day — pas de réservation séparée.
+    bookable: false,
+    includedNotice: {
+      fr: "Cet after-pilates est un événement privé, inclus automatiquement pour les participantes ayant réservé Pilates on a Boat ou Pilates Pool Day le 25 ou 26 août. Aucune réservation supplémentaire n'est nécessaire ici — ta place est déjà garantie via ta réservation.",
+      en: "This after-pilates is a private event, automatically included for guests who booked Pilates on a Boat or Pilates Pool Day on August 25 or 26. No separate booking is needed here — your spot is already secured through your booking.",
+    },
   },
   {
     id: "pilates-bateau-paris",
@@ -122,6 +168,8 @@ export const events: GirlyEvent[] = [
       description:
         "An exclusive Pilates class aboard an exceptional boat, between movement, sunshine and Parisian charm.",
     },
+    // Prix et places encore provisoires, à confirmer plus tard.
+    bookable: false,
   },
   {
     id: "pilates-bruxelles",
@@ -143,6 +191,8 @@ export const events: GirlyEvent[] = [
       description:
         "A special moment between girls, in an exceptional venue in the heart of Brussels, around a Pilates class designed to reconnect, move and enjoy.",
     },
+    // Prix et places encore provisoires, à confirmer plus tard.
+    bookable: false,
   },
 ];
 
@@ -163,5 +213,10 @@ export function localizeEvent(event: GirlyEvent, locale: Locale) {
       locale === "en" ? en?.description ?? event.description : event.description,
     date: translateDateLike(event.date, locale),
     time: translateDateLike(event.time, locale),
+    sessions: event.sessions?.map((s) => ({
+      id: s.id,
+      maxParticipants: s.maxParticipants,
+      label: locale === "en" ? s.en?.label ?? s.label : s.label,
+    })),
   };
 }

@@ -15,18 +15,26 @@ export async function POST(req: NextRequest) {
       contactName,
       contactEmail,
       contactPhone,
+      sessionIds,
     } = body as {
       eventId: string;
       participants: string[];
       contactName: string;
       contactEmail: string;
       contactPhone: string;
+      sessionIds?: string[];
     };
 
     // --- Validation de base ---------------------------------------------
     const event = getEventById(eventId);
     if (!event) {
       return NextResponse.json({ error: "Événement introuvable." }, { status: 404 });
+    }
+    if (event.bookable === false) {
+      return NextResponse.json(
+        { error: "Cet événement n'est pas ouvert à la réservation." },
+        { status: 400 }
+      );
     }
     if (!Array.isArray(participants) || participants.length === 0) {
       return NextResponse.json(
@@ -46,13 +54,26 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+    if (event.sessions) {
+      const validIds = new Set(event.sessions.map((s) => s.id));
+      if (
+        !Array.isArray(sessionIds) ||
+        sessionIds.length === 0 ||
+        sessionIds.some((id) => !validIds.has(id))
+      ) {
+        return NextResponse.json(
+          { error: "Merci de choisir au moins un créneau valide." },
+          { status: 400 }
+        );
+      }
+    }
 
     const numParticipants = participants.length;
 
     // --- Vérification des places restantes --------------------------------
     const { data: confirmedRows, error: fetchError } = await supabaseAdmin
       .from("reservations")
-      .select("num_participants")
+      .select("num_participants, session_ids")
       .eq("event_id", eventId)
       .eq("status", "confirmed");
 
@@ -64,11 +85,28 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const alreadyBooked = (confirmedRows ?? []).reduce(
-      (sum, r) => sum + r.num_participants,
-      0
-    );
-    const spotsLeft = event.maxParticipants - alreadyBooked;
+    let spotsLeft: number;
+    if (event.sessions) {
+      // Capacité indépendante par créneau : une réservation qui couvre
+      // plusieurs créneaux est limitée par le plus juste d'entre eux.
+      const bookedBySession = new Map<string, number>();
+      for (const row of confirmedRows ?? []) {
+        for (const sid of (row.session_ids ?? []) as string[]) {
+          bookedBySession.set(sid, (bookedBySession.get(sid) ?? 0) + row.num_participants);
+        }
+      }
+      const remainingPerSession = sessionIds!.map((sid) => {
+        const session = event.sessions!.find((s) => s.id === sid)!;
+        return session.maxParticipants - (bookedBySession.get(sid) ?? 0);
+      });
+      spotsLeft = Math.min(...remainingPerSession);
+    } else {
+      const alreadyBooked = (confirmedRows ?? []).reduce(
+        (sum, r) => sum + r.num_participants,
+        0
+      );
+      spotsLeft = event.maxParticipants - alreadyBooked;
+    }
 
     if (numParticipants > spotsLeft) {
       return NextResponse.json(
@@ -76,7 +114,7 @@ export async function POST(req: NextRequest) {
           error:
             spotsLeft <= 0
               ? "Cet événement est complet."
-              : `Il ne reste que ${spotsLeft} place(s) pour cet événement.`,
+              : `Il ne reste que ${spotsLeft} place(s) pour ce choix de créneau.`,
         },
         { status: 409 }
       );
@@ -92,6 +130,13 @@ export async function POST(req: NextRequest) {
     // — pas d'aller-retour supplémentaire pour rattacher stripe_session_id.
     const reservationId = randomUUID();
 
+    const sessionLabel = event.sessions
+      ? sessionIds!
+          .map((id) => event.sessions!.find((s) => s.id === id)?.label)
+          .filter(Boolean)
+          .join(" + ")
+      : null;
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
@@ -103,7 +148,9 @@ export async function POST(req: NextRequest) {
             unit_amount: Math.round(totalPrice * 100), // en centimes
             product_data: {
               name: `${event.title} (${numParticipants} participante${numParticipants > 1 ? "s" : ""})`,
-              description: `${event.venue}, ${event.date} à ${event.time}.`,
+              description: sessionLabel
+                ? `${event.venue}, ${event.date} — ${sessionLabel}.`
+                : `${event.venue}, ${event.date} à ${event.time}.`,
             },
           },
           quantity: 1,
@@ -130,6 +177,7 @@ export async function POST(req: NextRequest) {
       total_price: totalPrice,
       status: "pending",
       stripe_session_id: session.id,
+      session_ids: event.sessions ? sessionIds : null,
     });
 
     if (insertError) {

@@ -33,6 +33,7 @@ export type ReservationRow = {
   participants: string[];
   num_participants: number;
   total_price: number;
+  session_ids: string[] | null;
   stripe_session_id: string | null;
   stripe_payment_intent_id: string | null;
   status: ReservationStatus;

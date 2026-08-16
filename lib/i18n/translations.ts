@@ -32,6 +32,9 @@ export type Dictionary = {
     book: string;
     bookAria: (title: string) => string;
     fullAria: (title: string) => string;
+    comingSoon: string;
+    howToJoin: string;
+    privateEventTitle: string;
   };
   bookingModal: {
     close: string;
@@ -52,8 +55,11 @@ export type Dictionary = {
     disclaimer: string;
     errorMissingNames: string;
     errorMissingContact: string;
+    errorMissingSession: string;
     errorGeneric: string;
     errorNetwork: string;
+    chooseSession: string;
+    sessionFull: string;
   };
   footer: {
     cities: string;
@@ -62,7 +68,8 @@ export type Dictionary = {
   about: {
     kicker: string;
     title: string;
-    intro: string;
+    introParagraphs: string[];
+    pullQuotes: string[];
     photoComingSoon: string;
     subtitle: string;
     body: string;
@@ -106,6 +113,9 @@ const dictionary: Record<Locale, Dictionary> = {
       book: "Réserver",
       bookAria: (title: string) => `Réserver : ${title}`,
       fullAria: (title: string) => `${title} — complet`,
+      comingSoon: "Bientôt disponible",
+      howToJoin: "Comment participer ?",
+      privateEventTitle: "Événement privé",
     },
     bookingModal: {
       close: "Fermer",
@@ -127,8 +137,11 @@ const dictionary: Record<Locale, Dictionary> = {
         "Paiement sécurisé par Stripe. Ta place est confirmée dès réception du paiement.",
       errorMissingNames: "Merci de renseigner le nom de chaque participante.",
       errorMissingContact: "Merci de compléter tes coordonnées.",
+      errorMissingSession: "Merci de choisir au moins un créneau.",
       errorGeneric: "Une erreur est survenue. Réessaie dans un instant.",
       errorNetwork: "Impossible de contacter le serveur. Vérifie ta connexion.",
+      chooseSession: "Choisis ton créneau",
+      sessionFull: "complet",
     },
     footer: {
       cities: "France · Belgique · Monaco & Suisse",
@@ -137,8 +150,15 @@ const dictionary: Record<Locale, Dictionary> = {
     about: {
       kicker: "À propos",
       title: "Notre histoire",
-      intro:
-        "THE GIRLY CLUB The Girly Club est né d’une envie simple : créer des moments que l’on a vraiment envie de vivre. De Paris à Cannes, de Bruxelles à Genève, nous imaginons des expériences dans des lieux qui sortent de l’ordinaire : une séance de Pilates sur la Seine, un déjeuner au bord d’une piscine, un dîner dans une adresse confidentielle ou encore une expérience pensée spécialement pour notre communauté. Chaque événement est imaginé avec la même envie : découvrir un lieu, vivre quelque chose de différent et surtout, le partager avec des femmes inspirantes. Parce que The Girly Club, ce n’est pas seulement une succession d’événements. C’est une communauté qui se retrouve, se rencontre et évolue au fil des expériences.Des lieux d’exception, des expériences atypiques et des femmes qui ont envie de vivre plus.",
+      introParagraphs: [
+        "The Girly Club est né d'une envie simple : créer des moments que l'on a vraiment envie de vivre.",
+        "De Paris à Cannes, de Bruxelles à Genève, nous imaginons des expériences dans des lieux qui sortent de l'ordinaire : une séance de Pilates sur la Seine, un déjeuner au bord d'une piscine, un dîner dans une adresse confidentielle, ou encore une expérience pensée spécialement pour notre communauté.",
+        "Parce que The Girly Club, ce n'est pas seulement une succession d'événements. C'est une communauté qui se retrouve, se rencontre et évolue au fil des expériences.",
+      ],
+      pullQuotes: [
+        "Découvrir un lieu, vivre quelque chose de différent et surtout, le partager avec des femmes inspirantes.",
+        "Des lieux d'exception, des expériences atypiques, et des femmes qui ont envie de vivre plus.",
+      ],
       photoComingSoon: "Photo à venir",
       subtitle: "L'esprit du club",
       body: "Un deuxième texte peut venir ici — envoie-moi le contenu quand tu es prête.",
@@ -181,6 +201,9 @@ const dictionary: Record<Locale, Dictionary> = {
       book: "Book now",
       bookAria: (title: string) => `Book: ${title}`,
       fullAria: (title: string) => `${title} — full`,
+      comingSoon: "Coming soon",
+      howToJoin: "How to join",
+      privateEventTitle: "Private event",
     },
     bookingModal: {
       close: "Close",
@@ -202,8 +225,11 @@ const dictionary: Record<Locale, Dictionary> = {
         "Secure payment via Stripe. Your spot is confirmed once payment is received.",
       errorMissingNames: "Please enter the name of each participant.",
       errorMissingContact: "Please complete your contact details.",
+      errorMissingSession: "Please choose at least one time slot.",
       errorGeneric: "Something went wrong. Please try again in a moment.",
       errorNetwork: "Couldn't reach the server. Check your connection.",
+      chooseSession: "Choose your time slot",
+      sessionFull: "full",
     },
     footer: {
       cities: "France · Belgium · Monaco & Switzerland",
@@ -212,8 +238,13 @@ const dictionary: Record<Locale, Dictionary> = {
     about: {
       kicker: "About us",
       title: "Our story",
-      intro:
-        "The Girly Club's introduction will go here soon. In the meantime, this placeholder keeps the layout ready for your final content.",
+      introParagraphs: [
+        "The Girly Club's introduction will go here soon.",
+        "In the meantime, this placeholder keeps the layout ready for your final content — send me the real text (in French and English) whenever you're ready.",
+      ],
+      pullQuotes: [
+        "A placeholder quote can go here — a short, evocative line from your real story.",
+      ],
       photoComingSoon: "Photo coming soon",
       subtitle: "The spirit of the club",
       body: "A second block of text can go here — send me the content whenever you're ready.",

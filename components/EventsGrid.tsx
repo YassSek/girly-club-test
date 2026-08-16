@@ -6,7 +6,10 @@ import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import EventCard from "./EventCard";
 import BookingModal from "./BookingModal";
 
-export type EventWithAvailability = GirlyEvent & { spotsLeft: number };
+export type EventWithAvailability = GirlyEvent & {
+  spotsLeft: number;
+  sessionsAvailability?: { id: string; spotsLeft: number }[];
+};
 
 export default function EventsGrid({
   events,
@@ -70,6 +73,7 @@ export default function EventsGrid({
         <BookingModal
           event={selected}
           spotsLeft={selected.spotsLeft}
+          sessionsAvailability={selected.sessionsAvailability}
           onClose={() => setSelected(null)}
         />
       )}
