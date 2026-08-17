@@ -64,13 +64,13 @@ export default function AboutContent() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-6 pb-20">
-        <div className="relative aspect-[1408/768] w-full overflow-hidden">
+      <section className="mx-auto max-w-md px-6 pb-20">
+        <div className="relative aspect-[1131/1600] w-full overflow-hidden">
           <Image
-            src="/images/gallery/aboutimg.jpg"
+            src="/images/gallery/1000015266.jpeg"
             alt={t.about.title}
             fill
-            sizes="(max-width: 1024px) 100vw, 1024px"
+            sizes="(max-width: 640px) 100vw, 448px"
             quality={90}
             className="object-cover"
           />
