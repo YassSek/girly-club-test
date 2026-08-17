@@ -102,7 +102,7 @@ export default function EventCard({ event, spotsLeft, onSelect }: Props) {
           {expanded ? t.eventCard.seeLess : t.eventCard.seeDetails}
         </button>
 
-        {!notice && (
+        {!notBookable && (
           <div className="mt-auto flex items-center justify-between pt-4">
             <span className="text-sm">
               {t.eventCard.from}{" "}
@@ -122,7 +122,7 @@ export default function EventCard({ event, spotsLeft, onSelect }: Props) {
           onClick={handleActivate}
           disabled={isInert}
           className={`btn-bordeaux block w-full px-5 py-2 text-center text-xs font-bold uppercase tracking-widest2 ${
-            notice ? "mt-auto" : "mt-2"
+            notBookable ? "mt-auto" : "mt-2"
           }`}
         >
           {ctaLabel}
