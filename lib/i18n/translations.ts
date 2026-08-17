@@ -21,13 +21,14 @@ export type Dictionary = {
     from: string;
     perPerson: string;
     full: string;
-    spot: (n: number) => string;
     book: string;
     bookAria: (title: string) => string;
     fullAria: (title: string) => string;
     comingSoon: string;
     howToJoin: string;
     privateEventTitle: string;
+    soldOutTitle: string;
+    soldOutMessage: string;
   };
   bookingModal: {
     close: string;
@@ -99,13 +100,15 @@ const dictionary: Record<Locale, Dictionary> = {
       from: "À partir de",
       perPerson: "/ pers.",
       full: "Complet",
-      spot: (n: number) => `${n} place${n > 1 ? "s" : ""}`,
       book: "Réserver",
       bookAria: (title: string) => `Réserver : ${title}`,
       fullAria: (title: string) => `${title} — complet`,
       comingSoon: "Bientôt disponible",
       howToJoin: "Comment participer ?",
       privateEventTitle: "Événement privé",
+      soldOutTitle: "Événement complet",
+      soldOutMessage:
+        "Toutes les places pour cet événement ont déjà été réservées — désolée, nous ne pouvons pas t'accueillir cette fois-ci. N'hésite pas à revenir voir nos prochaines dates !",
     },
     bookingModal: {
       close: "Fermer",
@@ -184,13 +187,15 @@ const dictionary: Record<Locale, Dictionary> = {
       from: "From",
       perPerson: "/ person",
       full: "Full",
-      spot: (n: number) => `${n} spot${n > 1 ? "s" : ""}`,
       book: "Book now",
       bookAria: (title: string) => `Book: ${title}`,
       fullAria: (title: string) => `${title} — full`,
       comingSoon: "Coming soon",
       howToJoin: "How to join",
       privateEventTitle: "Private event",
+      soldOutTitle: "Event sold out",
+      soldOutMessage:
+        "All spots for this event have already been booked — we're sorry we can't welcome you this time. Feel free to check back for our next dates!",
     },
     bookingModal: {
       close: "Close",
