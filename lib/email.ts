@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer";
 import { ReservationRow } from "./supabase";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://thegirlyclub.fr";
+
 const smtpHost = process.env.SMTP_HOST;
 const smtpPort = process.env.SMTP_PORT;
 const smtpUser = process.env.SMTP_USER;
@@ -51,7 +53,7 @@ function buildConfirmationEmailHtml(reservation: ReservationRow): string {
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background-color:#ffffff;">
             <tr>
               <td style="background-color:#6F0E16;padding:32px 40px;text-align:center;">
-                <p style="margin:0;font-family:Georgia,'Times New Roman',serif;font-style:italic;color:#ffffff;font-size:26px;letter-spacing:0.02em;">the girly club</p>
+                <img src="${siteUrl}/images/logo/logo-white-crop.png" width="140" height="115" alt="The Girly Club" style="display:inline-block;width:140px;height:115px;" />
               </td>
             </tr>
             <tr>
@@ -86,6 +88,20 @@ function buildConfirmationEmailHtml(reservation: ReservationRow): string {
             </tr>
             <tr>
               <td style="background-color:#141010;padding:24px 40px;text-align:center;">
+                <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 auto 14px;">
+                  <tr>
+                    <td style="padding:0 8px;">
+                      <a href="https://www.instagram.com/thegirlyclubgc" target="_blank">
+                        <img src="${siteUrl}/images/email/instagram.png" width="22" height="22" alt="Instagram" style="display:block;width:22px;height:22px;" />
+                      </a>
+                    </td>
+                    <td style="padding:0 8px;">
+                      <a href="https://www.tiktok.com/@the.girlyclub" target="_blank">
+                        <img src="${siteUrl}/images/email/tiktok.png" width="22" height="22" alt="TikTok" style="display:block;width:22px;height:22px;" />
+                      </a>
+                    </td>
+                  </tr>
+                </table>
                 <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#ffffff99;">The Girly Club</p>
               </td>
             </tr>
