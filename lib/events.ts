@@ -71,20 +71,20 @@ export const events: GirlyEvent[] = [
     id: "pilates-piscine-cannes",
     title: "Pilates Pool Day",
     city: "Cannes",
-    venue: "Villa privée avec piscine — à 20 min de Cannes",
+    venue: "Villa privée avec piscine — à 20 min de Cannes (côté Mandelieu)",
     date: "26 août 2026",
     time: "10h30-14h30",
     pricePerPerson: 75,
     maxParticipants: 20,
     maxPerBooking: 4,
     description:
-      "Une parenthèse bien-être dans une villa privée avec piscine, à seulement 20 minutes de Cannes.\n\nVotre ticket comprend :\n• 1h de Pilates avec une coach privée\n• Matériel de Pilates fourni\n• Accès à la villa et à la piscine privatisée\n• Brunch & boissons\n• Baignade & moment de détente au bord de la piscine\n• Goodie bag The Girly Club\n• Un moment privilégié pour rencontrer et profiter avec la communauté The Girly Club\n\nAprès le Pilates et le brunch, place au pool time : baignade, soleil, musique et détente entre filles dans une villa entièrement privatisée pour l'occasion. 🍒",
+      "Une parenthèse bien-être dans une villa privée avec piscine, à seulement 20 minutes de Cannes (côté Mandelieu).\n\n🕥 Accueil à 10h30 - Fin à 14h30\n\nVotre ticket comprend :\n• 1h de Pilates avec une coach privée\n• Matériel de Pilates fourni\n• Accès à la villa et à la piscine privatisée\n• Brunch & boissons\n• Baignade & moment de détente au bord de la piscine\n• Goodie bag The Girly Club\n• Un moment privilégié pour rencontrer et profiter avec la communauté The Girly Club\n\nAprès le Pilates et le brunch, place au pool time : baignade, soleil, musique et détente entre filles dans une villa entièrement privatisée pour l'occasion. 🍒",
     image: "/images/events/pilates-piscine-cannes.jpg",
     en: {
       title: "Pilates Pool Day",
-      venue: "Private villa with pool — 20 min from Cannes",
+      venue: "Private villa with pool — 20 min from Cannes (Mandelieu side)",
       description:
-        "A wellness break in a private villa with a pool, just 20 minutes from Cannes.\n\nYour ticket includes:\n• 1h Pilates class with a private coach\n• Pilates equipment provided\n• Access to the villa and the private pool\n• Brunch & drinks\n• Swimming & relaxation by the pool\n• The Girly Club goodie bag\n• A special moment to meet and enjoy the Girly Club community\n\nAfter Pilates and brunch, it's pool time: swimming, sun, music and relaxation between girls in a villa fully privatised for the occasion. 🍒",
+        "A wellness break in a private villa with a pool, just 20 minutes from Cannes (Mandelieu side).\n\n🕥 Arrival at 10:30am - End at 2:30pm\n\nYour ticket includes:\n• 1h Pilates class with a private coach\n• Pilates equipment provided\n• Access to the villa and the private pool\n• Brunch & drinks\n• Swimming & relaxation by the pool\n• The Girly Club goodie bag\n• A special moment to meet and enjoy the Girly Club community\n\nAfter Pilates and brunch, it's pool time: swimming, sun, music and relaxation between girls in a villa fully privatised for the occasion. 🍒",
     },
   },
   {
