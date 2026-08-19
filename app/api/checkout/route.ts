@@ -4,10 +4,10 @@ import { getEventById } from "@/lib/events";
 import { supabaseAdmin } from "@/lib/supabase";
 import { stripe } from "@/lib/stripe";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-
 export async function POST(req: NextRequest) {
   try {
+    // Dérivé de la requête elle-même (fiable même si NEXT_PUBLIC_SITE_URL est mal configuré sur Vercel).
+    const siteUrl = req.nextUrl.origin || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
     const body = await req.json();
     const {
       eventId,

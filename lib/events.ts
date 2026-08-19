@@ -155,6 +155,19 @@ export const events: GirlyEvent[] = [
     },
     bookable: false,
   },
+  {
+    id: "test",
+    title: "Test",
+    city: "Test",
+    venue: "Test",
+    date: "Test",
+    time: "Test",
+    pricePerPerson: 0.5,
+    maxParticipants: 999,
+    maxPerBooking: 1,
+    description: "",
+    image: "",
+  },
 ];
 
 export function getEventById(id: string): GirlyEvent | undefined {
