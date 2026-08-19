@@ -15,9 +15,9 @@ async function getReservation(sessionId: string) {
 export default async function SuccessPage({
   searchParams,
 }: {
-  searchParams: { session_id?: string };
+  searchParams: Promise<{ session_id?: string }>;
 }) {
-  const sessionId = searchParams.session_id;
+  const { session_id: sessionId } = await searchParams;
   const reservation = sessionId ? await getReservation(sessionId) : null;
 
   return <SuccessContent sessionId={sessionId} reservation={reservation} />;
