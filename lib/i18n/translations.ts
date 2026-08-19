@@ -154,7 +154,7 @@ const dictionary: Record<Locale, Dictionary> = {
       ],
     },
     success: {
-      thanks: "Merci",
+      thanks: "vous remercie",
       invalidLink: "Lien de confirmation invalide.",
       pending:
         "Ton paiement est en cours de confirmation. Tu vas recevoir un email de confirmation d'ici quelques instants. Si rien ne se passe sous 10 minutes, contacte-nous directement.",
@@ -241,7 +241,7 @@ const dictionary: Record<Locale, Dictionary> = {
       ],
     },
     success: {
-      thanks: "Thank you",
+      thanks: "thanks you",
       invalidLink: "Invalid confirmation link.",
       pending:
         "Your payment is being confirmed. You'll receive a confirmation email shortly. If nothing happens within 10 minutes, please contact us directly.",
